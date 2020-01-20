@@ -25,20 +25,22 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.zone_list);
         ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
         HashMap<String, String> map;
+        String Name = "Name";
+        String Description = "Description";
 
         map = new HashMap<>();
-        map.put("Name","Сергей");
-        map.put("Description","Почему я сам должен искать инфу ?");
+        map.put(Name,"Сергей");
+        map.put(Description,"Почему я сам должен искать инфу ?");
         arrayList.add(map);
 
         map = new HashMap<>();
-        map.put("Name","Андрей");
-        map.put("Description","А ты все равно уже заплатил,да и курс к концу подходит");
+        map.put(Name,"Андрей");
+        map.put(Description,"А ты все равно уже заплатил,да и курс к концу подходит");
         arrayList.add(map);
 
 
-        SimpleAdapter adapter = new SimpleAdapter(this ,arrayList , android.R.layout.simple_list_item_1,
-                new String[]{"Name","Description"},
+        SimpleAdapter adapter = new SimpleAdapter(this ,arrayList , R.layout.simple_list ,
+                new String[]{Name,Description},
                 new int[]{R.id.firstTxt,R.id.secondTxt});
         listView.setAdapter(adapter);
     }
