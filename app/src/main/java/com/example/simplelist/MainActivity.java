@@ -6,6 +6,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.BaseBundle;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,10 +24,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String MY_PREFERENCES = "MyPrefs";
     SwipeRefreshLayout swipeLayout;
     ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
-    SimpleAdapter adapter;
     HashMap<String, String> map;
-    String[] values = prepareContent();
-    
+    BaseAdapter listContentAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,13 +35,13 @@ public class MainActivity extends AppCompatActivity {
 
         map = new HashMap<>();
         for (int i = 0; i < prepareContent().length; i++) {
-            String string = String.valueOf(i);
+            String string = String.valueOf(prepareContent().length);
             map.put(string, prepareContent()[i]);
             arrayList.add(map);
         }
+        String[] values = prepareContent();
 
-
-        BaseAdapter listContentAdapter = createAdapter(values);
+        listContentAdapter = createAdapter(values);
         listView.setAdapter(listContentAdapter);
 
 
@@ -50,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 arrayList.remove(position);
-                adapter.notifyDataSetChanged();
+                listContentAdapter.notifyDataSetChanged();
+                listView.setAdapter(listContentAdapter);
             }
         });
         swipeLayout = findViewById(R.id.swiperefresh);
@@ -58,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 swipeLayout.setRefreshing(false);
-                adapter.notifyDataSetChanged();
+                listContentAdapter.notifyDataSetChanged();
+                listView.setAdapter(listContentAdapter);
             }
         });
     }
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private void initSharedPreferences() {
         sharedPreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         for (int i = 0; i < prepareContent().length; i++) {
-            String string = String.valueOf(i);
+            String string = String.valueOf(prepareContent().length);
             sharedPreferences.edit()
                     .putString(string, prepareContent()[i]);
         }
@@ -79,6 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
     @NonNull
     private String[] prepareContent() {
-        return getString(R.string.large_text).split("\n\n");
+        return getString(R.string.large_text).split("\n");
     }
 }
