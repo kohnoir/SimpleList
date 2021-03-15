@@ -18,12 +18,12 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
     private ListView listView;
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
     public static final String MY_PREFERENCES = "MyPrefs";
-    SwipeRefreshLayout swipeLayout;
-    ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
-    HashMap<String, String> map;
-    BaseAdapter listContentAdapter;
+    private SwipeRefreshLayout swipeLayout;
+    private ArrayList<HashMap<String, String>> arrayList = new ArrayList<>();
+    private HashMap<String, String> map;
+    private BaseAdapter listContentAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
